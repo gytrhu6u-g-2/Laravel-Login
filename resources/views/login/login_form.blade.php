@@ -24,6 +24,13 @@
             </div>
         @endif
 
+        @if (session('login_error')) {
+            <div class="alert alert-danger">
+                {{ session('login_error') }}
+            </div>
+        }
+        @endif
+
         <div class="form-floating">
             <input type="email" class="form-control" id="floatingInput" name="email" placeholder="name@example.com">
             <label for="floatingInput">Email address</label>

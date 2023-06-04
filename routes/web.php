@@ -14,8 +14,16 @@ use App\Http\Controllers\Auth\AuthController;
 |
 */
 
-Route::get('/', [AuthController::class, 'showLogin'])->name('login');
-
-Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 
+Route::middleware(['guest'])->group(function () {
+    Route::get('/', [AuthController::class, 'showLogin'])->name('login.show');
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
+});
+
+Route::middleware(['auth'])->group(function () {
+    // ホーム画面       
+    Route::get('/home', function() {
+        return view('home');
+    })->name('home');
+});
