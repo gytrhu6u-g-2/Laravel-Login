@@ -11,16 +11,16 @@
     <div class="container">
         <div class="mt-5">
             <h3>プロフィール</h3>
-            @if (session('login_success')) {
-                <div class="alert alert-success">
-                    {{ session('login_success') }}
-                </div>
-            }
-            @endif
+            <x-alert type="danger" :session="'login_success'"/>
             <ul>
                 <li>名前：{{ Auth::user()->name}}</li>
                 <li>メールアドレス：{{ Auth::user()->email}}</li>
             </ul>
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" >ログアウト</button>
+                <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+            </form>
         </div>
     </div>
 </body>

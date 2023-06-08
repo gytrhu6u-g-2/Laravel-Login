@@ -24,12 +24,8 @@
             </div>
         @endif
 
-        @if (session('login_error')) {
-            <div class="alert alert-danger">
-                {{ session('login_error') }}
-            </div>
-        }
-        @endif
+        <x-alert type="danger" :session="'login_error'"/>
+        <x-alert type="danger" :session="'logout_success'"/>
 
         <div class="form-floating">
             <input type="email" class="form-control" id="floatingInput" name="email" placeholder="name@example.com">

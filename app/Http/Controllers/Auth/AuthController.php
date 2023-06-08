@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginFormRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -19,8 +20,8 @@ class AuthController extends Controller
     }
 
     /**
+     * ログイン機能
      * @param App\Http\Requests\LoginFormRequest $request
-     * 
      */
     public function login(LoginFormRequest $request)
     {
@@ -34,7 +35,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect('home')->with('login_success','ログイン成功しました！');
+            return redirect(route('home'))->with('login_success','ログイン成功しました！');
         }
 
         return back()->withErrors(
@@ -43,4 +44,20 @@ class AuthController extends Controller
             ]
             );
     }
+
+    /**
+     * ログアウト機能
+     */
+    public function logout(Request $request): RedirectResponse
+    {
+        Auth::logout();
+        
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect(route('login.show'))->with('login_success', 'ログアウトしました！');
+    }
+
+
 }
